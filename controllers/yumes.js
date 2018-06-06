@@ -34,7 +34,12 @@ const create = async (ctx) => {
 const posts = async (ctx) => {
   // const { page, perPage } = ctx.query;
   const { posts: yumes } = await User.findById(ctx.state.user.id, { posts: true })
-    .populate('posts')
+    .populate({
+      path: 'posts',
+      populate: {
+        path: 'dreamer',
+      },
+    })
     .exec();
   ctx.body = yumes.map(yume => ({
     ...yume._doc,
@@ -46,7 +51,12 @@ const posts = async (ctx) => {
 const starred = async (ctx) => {
   // const { page, perPage } = ctx.query;
   const { stars: yumes } = await User.findById(ctx.state.user.id, { stars: true })
-    .populate('stars')
+    .populate({
+      path: 'stars',
+      populate: {
+        path: 'dreamer',
+      },
+    })
     .exec();
   ctx.body = yumes.map(yume => ({
     ...yume._doc,
