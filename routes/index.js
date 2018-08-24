@@ -3,6 +3,7 @@ const koaJwt = require('koa-jwt');
 const config = require('../config');
 const users = require('../controllers/users');
 const yumes = require('../controllers/yumes');
+const plants = require('../controllers/plants');
 const APIError = require('../middlewares/api-error');
 
 const jwtMiddleware = koaJwt({
@@ -17,6 +18,9 @@ router.use(APIError);
 
 router.post('/login', users.login);
 
+router.get('/plants/token', plants.token);
+
+// need auth
 router.use(jwtMiddleware);
 
 router.get('/user', users.find);
